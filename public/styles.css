@@ -214,13 +214,13 @@ body {
 
 /* زر المرجعية — أيقونة + نص بنفس الحجم */
 .bookmark-btn {
-  flex: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
-  padding: 7px 13px; border-radius: 100px; border: 1px solid rgba(120,120,128,.22);
+  flex: none; display: inline-flex; align-items: center; gap: 4.5px; cursor: pointer;
+  padding: 5px 10px; border-radius: 100px; border: 1px solid rgba(120,120,128,.22);
   background: rgba(255,255,255,.7); color: var(--ink-faint); transition: all .2s ease;
   font-family: var(--font); font-weight: 700; line-height: 1;
 }
-.bookmark-btn svg { width: 18px; height: 18px; display: block; }
-.bm-label { font-size: 18px; line-height: 1; }
+.bookmark-btn svg { width: 13.5px; height: 13.5px; display: block; }
+.bm-label { font-size: 13.5px; line-height: 1; }
 .bookmark-btn:hover { transform: translateY(-1px); border-color: var(--gold); color: var(--gold); }
 .bookmark-btn.on { background: var(--gold); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(199,149,69,.5); }
 .bookmark-btn.on:hover { color: #fff; }
@@ -289,8 +289,8 @@ body {
   .nav-btn span { display: none; }
   .nav-btn.primary span, .nav-btn.success span { display: inline; }
   .scale-btn { font-size: 15px; }
-  .bm-label { font-size: 16px; }
-  .bookmark-btn svg { width: 16px; height: 16px; }
+  .bm-label { font-size: 12px; }
+  .bookmark-btn svg { width: 12px; height: 12px; }
 }
 
 /* الثيم فاتح دائماً (مستوحى من ألوان باذل) — حتى مع تفعيل الوضع الداكن في النظام.
