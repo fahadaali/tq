@@ -205,7 +205,7 @@ function roleShort() { return state.role || '—'; }
 
 // شعارا الجهتين — تُستبدل الصور الرسمية تلقائياً عند إضافتها في /assets
 function brandLockup() {
-  const h = `/assets/logo-hadiyat.png`, b = `/assets/logo-bazel.png`;
+  const h = `/assets/logo-hadiyat.png`, b = `/assets/logo-bazel.svg`;
   const hf = `/assets/logo-hadiyat-placeholder.svg`, bf = `/assets/logo-bazel-placeholder.svg`;
   return `
     <div class="brand-lockup">
