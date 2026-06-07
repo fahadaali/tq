@@ -16,7 +16,13 @@ const DB_FILE = path.join(__dirname, 'responses.json');
 
 if (SUPABASE_URL && SUPABASE_KEY) {
   const { createClient } = require('@supabase/supabase-js');
-  supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+  // تمرير ws كـ transport يضمن عمل العميل على أي إصدار Node (Realtime يتطلب WebSocket).
+  let WS;
+  try { WS = require('ws'); } catch (e) { /* غير متوفر */ }
+  supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: false, autoRefreshToken: false },
+    realtime: WS ? { transport: WS } : undefined,
+  });
   mode = 'supabase';
   console.log('التخزين: Supabase (جدول «' + TABLE + '»)');
 } else {

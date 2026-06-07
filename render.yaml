@@ -15,7 +15,7 @@ services:
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
-        value: "20"
+        value: "22"
       - key: SUPABASE_URL
         sync: false           # يُدخل يدوياً في لوحة Render (سرّي)
       - key: SUPABASE_SERVICE_KEY
