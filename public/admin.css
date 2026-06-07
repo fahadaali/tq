@@ -19,7 +19,7 @@ body.admin { display: block; }
   background: rgba(255,255,255,.65); color: var(--ink-soft); transition: all .18s ease;
 }
 .abtn:hover { transform: translateY(-1px); }
-.abtn.primary { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(10,132,255,.3); }
+.abtn.primary { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(0,88,80,.3); }
 .abtn.danger { background: linear-gradient(135deg,#ff453a,#d70015); color: #fff; border-color: transparent; }
 
 .admin-main { max-width: 1180px; margin: 22px auto 60px; padding: 0 18px; }
@@ -55,11 +55,11 @@ table.resp { width: 100%; border-collapse: collapse; min-width: 640px; }
 table.resp th, table.resp td { padding: 13px 14px; text-align: right; font-size: 13.5px; border-bottom: 1px solid rgba(120,120,128,.14); white-space: nowrap; }
 table.resp th { font-weight: 800; color: var(--ink-mut); font-size: 12.5px; position: sticky; top: 0; }
 table.resp tbody tr:hover { background: rgba(120,120,128,.06); }
-.role-tag { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 100px; background: rgba(94,92,230,.12); color: var(--accent-2); }
+.role-tag { font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 100px; background: rgba(171,144,113,.12); color: var(--accent-2); }
 .avg-cell { font-weight: 800; font-variant-numeric: tabular-nums; }
 .icon-btn { cursor: pointer; border: none; background: rgba(255,69,58,.1); color: var(--red); width: 34px; height: 34px; border-radius: 10px; font-size: 15px; transition: all .15s; }
 .icon-btn:hover { background: var(--red); color: #fff; }
-.expand-btn { cursor: pointer; border: none; background: rgba(10,132,255,.1); color: var(--accent); width: 34px; height: 34px; border-radius: 10px; font-size: 15px; font-weight: 800; transition: all .15s; }
+.expand-btn { cursor: pointer; border: none; background: rgba(0,88,80,.1); color: var(--accent); width: 34px; height: 34px; border-radius: 10px; font-size: 15px; font-weight: 800; transition: all .15s; }
 .expand-btn:hover { background: var(--accent); color: #fff; }
 
 .detail-row td { background: rgba(120,120,128,.05); white-space: normal; padding: 0; }
@@ -67,14 +67,14 @@ table.resp tbody tr:hover { background: rgba(120,120,128,.06); }
 .detail-idea { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: start; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.5); }
 .detail-idea .di-t { font-size: 13px; font-weight: 700; }
 .detail-idea .di-scores { font-size: 12px; color: var(--ink-mut); margin-top: 3px; }
-.detail-idea .di-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 5px; font-style: italic; background: rgba(255,159,10,.1); padding: 6px 10px; border-radius: 8px; }
+.detail-idea .di-note { font-size: 12.5px; color: var(--ink-soft); margin-top: 5px; font-style: italic; background: rgba(199,149,69,.12); padding: 6px 10px; border-radius: 8px; }
 .detail-idea .di-score { font-size: 17px; font-weight: 800; align-self: center; font-variant-numeric: tabular-nums; }
 
 .empty { text-align: center; padding: 60px 20px; color: var(--ink-mut); }
 .empty .big { font-size: 48px; margin-bottom: 10px; }
 
 /* نافذة التأكيد */
-.modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(20,25,45,.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; padding: 20px; animation: ovf .2s ease; }
+.modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(12,40,36,.42); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; padding: 20px; animation: ovf .2s ease; }
 /* احترام خاصية hidden (وإلا تبقى النافذة ظاهرة لأن display:grid يتغلّب عليها) */
 .modal-overlay[hidden] { display: none; }
 @keyframes ovf { from { opacity: 0; } }

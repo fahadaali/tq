@@ -1,24 +1,28 @@
 /* ===== منصة تقييم أفكار هدية عالم — نظام تصميم بأسلوب آبل (الزجاج السائل) ===== */
 
 :root {
-  --bg-0: #eef1f7;
-  --bg-1: #e7ecf5;
-  --ink: #1c1c1e;
-  --ink-soft: #3a3a3c;
-  --ink-mut: #6c6c70;
-  --ink-faint: #8e8e93;
+  /* خلفية فاتحة دافئة مستوحاة من ألوان شعار باذل */
+  --bg-0: #f5f2ea;          /* كريمي دافئ */
+  --bg-1: #e9efea;          /* لمسة خضراء فاتحة */
+  --ink: #1e2c28;           /* نص داكن بميل أخضر */
+  --ink-soft: #38453f;
+  --ink-mut: #5f6e67;
+  --ink-faint: #8b968f;
 
-  --accent: #0a84ff;        /* أزرق آبل */
-  --accent-2: #5e5ce6;      /* بنفسجي */
-  --accent-grad: linear-gradient(135deg, #0a84ff 0%, #5e5ce6 100%);
-  --gold: #ff9f0a;          /* لون المرجعية البارز */
-  --green: #30d158;
-  --red: #ff453a;
+  /* ألوان العلامة: الأخضر الزمردي + الذهبي */
+  --teal: #005850;          /* أخضر باذل الرسمي */
+  --gold-brand: #ab9071;    /* ذهبي باذل الرسمي */
+  --accent: #00685d;        /* أخضر للواجهة (أنصع قليلاً) */
+  --accent-2: #8c6d44;      /* ذهبي أعمق للنصوص (وضوح أعلى) */
+  --accent-grad: linear-gradient(135deg, #00786b 0%, #005850 100%);
+  --gold: #c79545;          /* لون المرجعية البارز (ذهبي متناسق) */
+  --green: #30d158;         /* تنسيق شرطي (نجاح/أولوية عالية) */
+  --red: #ff453a;           /* تنسيق شرطي (حذف/مستبعدة) */
 
   --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-bg-strong: rgba(255, 255, 255, 0.72);
-  --glass-brd: rgba(255, 255, 255, 0.8);
-  --glass-shadow: 0 16px 50px rgba(20, 30, 60, 0.16);
+  --glass-bg-strong: rgba(255, 255, 255, 0.74);
+  --glass-brd: rgba(255, 255, 255, 0.82);
+  --glass-shadow: 0 16px 50px rgba(15, 50, 44, 0.14);
   --radius: 26px;
   --radius-sm: 16px;
 
@@ -42,17 +46,17 @@ html, body {
 body {
   overflow-x: hidden;
   background:
-    radial-gradient(1200px 700px at 80% -10%, #dfe7fb 0%, transparent 60%),
-    radial-gradient(1000px 700px at 0% 110%, #e9e0fb 0%, transparent 55%),
+    radial-gradient(1200px 700px at 80% -10%, #d6e8e2 0%, transparent 60%),
+    radial-gradient(1000px 700px at 0% 110%, #efe6d4 0%, transparent 55%),
     linear-gradient(180deg, var(--bg-0), var(--bg-1));
 }
 
 /* ===== أجرام ضوئية متحركة في الخلفية ===== */
 .bg-orbs { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
 .orb { position: absolute; border-radius: 50%; filter: blur(60px); opacity: .55; animation: float 18s ease-in-out infinite; }
-.orb-1 { width: 420px; height: 420px; top: -80px; right: -60px; background: #7eb6ff; }
-.orb-2 { width: 360px; height: 360px; bottom: -100px; left: -60px; background: #b9a3ff; animation-delay: -6s; }
-.orb-3 { width: 300px; height: 300px; top: 40%; left: 55%; background: #ffd59e; opacity: .4; animation-delay: -11s; }
+.orb-1 { width: 420px; height: 420px; top: -80px; right: -60px; background: #9fd3c9; }
+.orb-2 { width: 360px; height: 360px; bottom: -100px; left: -60px; background: #e3d0b2; animation-delay: -6s; }
+.orb-3 { width: 300px; height: 300px; top: 40%; left: 55%; background: #c2e0d3; opacity: .4; animation-delay: -11s; }
 @keyframes float {
   0%, 100% { transform: translate(0,0) scale(1); }
   33% { transform: translate(-30px, 24px) scale(1.08); }
@@ -91,7 +95,7 @@ body {
 }
 .topbar-inner { display: flex; align-items: center; gap: 14px; padding: 10px 18px; }
 .brand { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-soft); white-space: nowrap; }
-.brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-grad); box-shadow: 0 0 0 3px rgba(10,132,255,.18); }
+.brand-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-grad); box-shadow: 0 0 0 3px rgba(0,88,80,.18); }
 .progress-line { flex: 1; height: 6px; border-radius: 100px; background: rgba(120,120,128,.18); overflow: hidden; }
 #progress-fill { display: block; height: 100%; width: 0%; border-radius: 100px; background: var(--accent-grad); transition: width .5s cubic-bezier(.22,1,.36,1); }
 .topbar-meta { font-size: 13px; font-weight: 600; color: var(--ink-mut); font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -142,12 +146,12 @@ body {
   padding: 14px 16px; border-radius: var(--radius-sm);
   background: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.7);
 }
-.method-step.active { background: rgba(10,132,255,.1); border-color: rgba(10,132,255,.35); }
+.method-step.active { background: rgba(0,88,80,.1); border-color: rgba(0,88,80,.35); }
 .method-num { flex: none; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 14px; color: #fff; background: var(--ink-faint); }
 .method-step.active .method-num { background: var(--accent-grad); }
 .method-body h4 { margin: 0 0 3px; font-size: 15px; font-weight: 700; }
 .method-body p { margin: 0; font-size: 13.5px; color: var(--ink-mut); line-height: 1.65; }
-.method-badge { margin-inline-start: auto; align-self: center; font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(10,132,255,.12); padding: 4px 10px; border-radius: 100px; }
+.method-badge { margin-inline-start: auto; align-self: center; font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(0,88,80,.12); padding: 4px 10px; border-radius: 100px; }
 
 /* حقول النموذج */
 .field { margin-bottom: 18px; }
@@ -158,7 +162,7 @@ body {
   padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(120,120,128,.25);
   background: rgba(255,255,255,.7); transition: border-color .2s, box-shadow .2s; outline: none;
 }
-.input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(10,132,255,.16); }
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,88,80,.16); }
 
 .role-chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
@@ -168,11 +172,11 @@ body {
   color: var(--ink-soft); transition: all .18s ease; white-space: nowrap;
 }
 .chip:hover { transform: translateY(-1px); }
-.chip.selected { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 22px rgba(10,132,255,.35); }
+.chip.selected { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 22px rgba(0,88,80,.35); }
 
 /* ===== بطاقة الفكرة ===== */
 .idea-head { margin-bottom: 22px; }
-.idea-cat { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent-2); background: rgba(94,92,230,.1); padding: 5px 12px; border-radius: 100px; margin-bottom: 12px; }
+.idea-cat { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--accent-2); background: rgba(171,144,113,.1); padding: 5px 12px; border-radius: 100px; margin-bottom: 12px; }
 .idea-title { font-size: clamp(20px, 3.6vw, 26px); font-weight: 800; line-height: 1.3; margin: 0 0 12px; letter-spacing: -.3px; }
 .idea-desc { font-size: 14.5px; line-height: 1.85; color: var(--ink-mut); margin: 0; max-height: 168px; overflow-y: auto; padding-inline-end: 6px; }
 .idea-desc::-webkit-scrollbar { width: 6px; }
@@ -185,7 +189,7 @@ body {
 }
 .crit-top { display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
 .crit-name { font-size: 15px; font-weight: 700; color: var(--ink); }
-.crit-weight { font-size: 11.5px; font-weight: 700; color: var(--accent); background: rgba(10,132,255,.1); padding: 3px 9px; border-radius: 100px; }
+.crit-weight { font-size: 11.5px; font-weight: 700; color: var(--accent); background: rgba(0,88,80,.1); padding: 3px 9px; border-radius: 100px; }
 .crit-desc { font-size: 12.5px; color: var(--ink-mut); line-height: 1.6; margin: 0 0 12px; }
 
 /* مقياس ١–٥ */
@@ -198,14 +202,14 @@ body {
   display: grid; place-items: center; transition: all .16s cubic-bezier(.22,1,.36,1);
 }
 .scale-btn:hover { transform: translateY(-2px); border-color: var(--accent); }
-.scale-btn.selected { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(10,132,255,.35); transform: translateY(-2px); }
+.scale-btn.selected { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 20px rgba(0,88,80,.35); transform: translateY(-2px); }
 .scale-ends { display: flex; justify-content: space-between; margin-top: 7px; font-size: 11px; color: var(--ink-faint); font-weight: 600; }
 
 /* خانة الملاحظة */
 .note-wrap { margin-top: 16px; }
 .note-toggle { background: none; border: none; cursor: pointer; color: var(--accent); font-family: var(--font); font-size: 13px; font-weight: 700; padding: 4px 0; display: inline-flex; align-items: center; gap: 6px; }
 .note-area { width: 100%; margin-top: 10px; min-height: 70px; resize: vertical; font-family: var(--font); font-size: 14px; padding: 12px 14px; border-radius: 13px; border: 1px solid rgba(120,120,128,.25); background: rgba(255,255,255,.7); outline: none; line-height: 1.7; }
-.note-area:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(10,132,255,.16); }
+.note-area:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,88,80,.16); }
 
 /* زر المرجعية */
 .bookmark-btn {
@@ -215,7 +219,7 @@ body {
   background: rgba(255,255,255,.7); color: var(--ink-faint); transition: all .2s ease;
 }
 .bookmark-btn:hover { transform: scale(1.08); }
-.bookmark-btn.on { background: var(--gold); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(255,159,10,.45); }
+.bookmark-btn.on { background: var(--gold); border-color: transparent; color: #fff; box-shadow: 0 6px 18px rgba(199,149,69,.5); }
 
 /* تنبيه عدم الاكتمال */
 .warn { margin-top: 16px; font-size: 13px; font-weight: 600; color: var(--red); background: rgba(255,69,58,.1); border: 1px solid rgba(255,69,58,.25); padding: 11px 14px; border-radius: 13px; display: none; align-items: center; gap: 8px; }
@@ -238,7 +242,7 @@ body {
 }
 .nav-btn:hover:not(:disabled) { transform: translateY(-1px); }
 .nav-btn:disabled { opacity: .35; cursor: default; }
-.nav-btn.primary { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 22px rgba(10,132,255,.35); }
+.nav-btn.primary { background: var(--accent-grad); color: #fff; border-color: transparent; box-shadow: 0 8px 22px rgba(0,88,80,.35); }
 .nav-btn.success { background: linear-gradient(135deg,#30d158,#28a745); box-shadow: 0 8px 22px rgba(48,209,88,.4); }
 
 /* نقاط التقدّم */
@@ -253,7 +257,7 @@ body {
 .dot.done { background: var(--accent); }
 .dot.current { width: 26px; border-radius: 100px; background: var(--accent-grad); }
 .dot.bookmarked { background: var(--gold); }
-.dot.bookmarked.current { background: linear-gradient(135deg,#ff9f0a,#ff6b00); }
+.dot.bookmarked.current { background: linear-gradient(135deg,#d4a253,#b3812f); }
 .dot.intro { background: rgba(120,120,128,.45); }
 .dot.intro.done { background: var(--accent); }
 
@@ -284,15 +288,12 @@ body {
   .bookmark-btn { width: 38px; height: 38px; top: 18px; }
 }
 
+/* الثيم فاتح دائماً (مستوحى من ألوان باذل) — حتى مع تفعيل الوضع الداكن في النظام.
+   نثبّت مخطط الألوان الفاتح لمنع المتصفح من قلب ألوان عناصر الإدخال. */
+:root { color-scheme: light; }
+
+/* تم حذف تجاوزات الوضع الداكن للحفاظ على ثيم فاتح موحّد */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-0: #0b0b0f; --bg-1: #131320; --ink: #f2f2f7; --ink-soft: #d6d6db;
-    --ink-mut: #a0a0a8; --ink-faint: #8a8a90;
-    --glass-bg: rgba(40,40,55,.5); --glass-bg-strong: rgba(40,40,55,.7);
-    --glass-brd: rgba(255,255,255,.12); --glass-shadow: 0 16px 50px rgba(0,0,0,.5);
-  }
-  body { background: radial-gradient(1200px 700px at 80% -10%, #1a2747 0%, transparent 60%), radial-gradient(1000px 700px at 0% 110%, #2a1f47 0%, transparent 55%), linear-gradient(180deg,var(--bg-0),var(--bg-1)); }
-  .input, .scale-btn, .chip, .crit, .method-step, .note-area, .nav-btn, .bookmark-btn, .thanks .summary { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); }
-  .scale-btn { color: var(--ink-soft); }
+  :root { color-scheme: light; }
   .orb { opacity: .35; }
 }
