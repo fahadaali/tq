@@ -121,6 +121,15 @@ body {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(18px) scale(.985); } to { opacity: 1; transform: none; } }
 @keyframes fadeOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-14px) scale(.985); } }
 
+/* ===== شعارات الجهتين (brand lockup) ===== */
+.brand-lockup { text-align: center; margin: 0 0 24px; }
+.brand-logos { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.brand-logo { height: 66px; width: auto; display: block; object-fit: contain; }
+.brand-logo.sm { height: 40px; }
+.brand-divider { width: 1px; align-self: stretch; min-height: 44px; background: linear-gradient(180deg, transparent, rgba(120,120,128,.4), transparent); }
+.brand-caption { margin: 12px 0 0; font-size: 13px; font-weight: 700; color: var(--ink-mut); }
+.brand-caption .sep { color: var(--ink-faint); margin: 0 6px; }
+
 /* ===== شاشة المقدمة ===== */
 .intro-eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .3px; color: var(--accent); margin: 0 0 12px; }
 .intro-title { font-size: clamp(26px, 5vw, 40px); font-weight: 800; line-height: 1.18; margin: 0 0 6px; letter-spacing: -.5px; }

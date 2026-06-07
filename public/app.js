@@ -118,6 +118,7 @@ function render() {
 function renderIntro() {
   const p = state.config.project;
   return `
+    ${brandLockup()}
     <p class="intro-eyebrow">${p.subtitle}</p>
     <h1 class="intro-title">${p.title}</h1>
     <p class="intro-sub">منصة التقييم التشاركي للأفكار</p>
@@ -201,6 +202,21 @@ function renderThanks() {
   `;
 }
 function roleShort() { return state.role || '—'; }
+
+// شعارا الجهتين — تُستبدل الصور الرسمية تلقائياً عند إضافتها في /assets
+function brandLockup() {
+  const h = `/assets/logo-hadiyat.png`, b = `/assets/logo-bazel.png`;
+  const hf = `/assets/logo-hadiyat-placeholder.svg`, bf = `/assets/logo-bazel-placeholder.svg`;
+  return `
+    <div class="brand-lockup">
+      <div class="brand-logos">
+        <img class="brand-logo" src="${h}" alt="جمعية هدية عالم" onerror="this.onerror=null;this.src='${hf}'" />
+        <span class="brand-divider"></span>
+        <img class="brand-logo" src="${b}" alt="مؤسسة باذل الأهلية" onerror="this.onerror=null;this.src='${bf}'" />
+      </div>
+      <p class="brand-caption">مؤسسة باذل الأهلية<span class="sep">·</span>جمعية هدية عالم</p>
+    </div>`;
+}
 
 // ===== ربط الأحداث للبطاقة الحالية =====
 function wire(card) {
