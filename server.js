@@ -1,38 +1,20 @@
 'use strict';
 
+try { require('dotenv').config({ quiet: true }); } catch (e) { /* dotenv اختياري */ }
+
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const XLSX = require('xlsx');
 
 const { PROJECT, ROLES, CRITERIA, IDEAS, scoreIdea } = require('./data/dataset');
+const store = require('./data/store');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
-const DB_FILE = path.join(DATA_DIR, 'responses.json');
 
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// ---------- تخزين بسيط في ملف JSON ----------
-function readResponses() {
-  try {
-    const raw = fs.readFileSync(DB_FILE, 'utf8');
-    const data = JSON.parse(raw);
-    return Array.isArray(data) ? data : [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function writeResponses(list) {
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  const tmp = DB_FILE + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(list, null, 2), 'utf8');
-  fs.renameSync(tmp, DB_FILE);
-}
 
 // إثراء الرد بالنتائج المحسوبة
 function enrich(resp) {
@@ -57,7 +39,7 @@ app.get('/api/config', (req, res) => {
 });
 
 // استلام رد جديد
-app.post('/api/submit', (req, res) => {
+app.post('/api/submit', async (req, res) => {
   const body = req.body || {};
   const evaluator = String(body.evaluator || '').trim();
   const role = String(body.role || '').trim();
@@ -88,32 +70,41 @@ app.post('/api/submit', (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  const list = readResponses();
-  list.push(record);
-  writeResponses(list);
-
-  res.json({ ok: true, id: record.id });
+  try {
+    await store.addResponse(record);
+    res.json({ ok: true, id: record.id });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'تعذّر حفظ التقييم. حاول مرة أخرى.' });
+  }
 });
 
 // كل الردود (للأدمن) — مُثراة بالنتائج
-app.get('/api/responses', (req, res) => {
-  const list = readResponses().map(enrich);
-  res.json({ responses: list, ideas: IDEAS, criteria: CRITERIA });
+app.get('/api/responses', async (req, res) => {
+  try {
+    const list = (await store.listResponses()).map(enrich);
+    res.json({ responses: list, ideas: IDEAS, criteria: CRITERIA });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'تعذّر تحميل النتائج.' });
+  }
 });
 
 // حذف رد
-app.delete('/api/responses/:id', (req, res) => {
-  const id = req.params.id;
-  const list = readResponses();
-  const next = list.filter((r) => r.id !== id);
-  if (next.length === list.length) return res.status(404).json({ error: 'الرد غير موجود.' });
-  writeResponses(next);
-  res.json({ ok: true });
+app.delete('/api/responses/:id', async (req, res) => {
+  try {
+    const ok = await store.deleteResponse(req.params.id);
+    if (!ok) return res.status(404).json({ error: 'الرد غير موجود.' });
+    res.json({ ok: true });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'تعذّر حذف الرد.' });
+  }
 });
 
 // ---------- التصدير ----------
-function buildRows() {
-  const list = readResponses().map(enrich);
+async function buildRows() {
+  const list = (await store.listResponses()).map(enrich);
   const rows = [];
   for (const r of list) {
     const row = {
@@ -136,25 +127,32 @@ function buildRows() {
   return rows;
 }
 
-app.get('/api/export.csv', (req, res) => {
-  const rows = buildRows();
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const csv = XLSX.utils.sheet_to_csv(ws);
-  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename="evaluation_results.csv"');
-  res.send('﻿' + csv); // BOM لدعم العربية في Excel
+app.get('/api/export.csv', async (req, res) => {
+  try {
+    const rows = await buildRows();
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const csv = XLSX.utils.sheet_to_csv(ws);
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', 'attachment; filename="evaluation_results.csv"');
+    res.send('﻿' + csv); // BOM لدعم العربية في Excel
+  } catch (e) { console.error(e); res.status(500).send('export error'); }
 });
 
-app.get('/api/export.xlsx', (req, res) => {
-  const rows = buildRows();
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'النتائج');
-  const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
-  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-  res.setHeader('Content-Disposition', 'attachment; filename="evaluation_results.xlsx"');
-  res.send(buf);
+app.get('/api/export.xlsx', async (req, res) => {
+  try {
+    const rows = await buildRows();
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'النتائج');
+    const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', 'attachment; filename="evaluation_results.xlsx"');
+    res.send(buf);
+  } catch (e) { console.error(e); res.status(500).send('export error'); }
 });
+
+// فحص الصحة (يستخدمه Render)
+app.get('/healthz', (req, res) => res.json({ ok: true, storage: store.mode }));
 
 // صفحة الأدمن
 app.get('/admin', (req, res) => {

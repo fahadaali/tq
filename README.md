@@ -36,9 +36,25 @@ npm start          # المنفذ الافتراضي 3000 (أو متغيّر ا�
 - **لوحة الأدمن (/admin):** داشبورد بالإحصاءات، ترتيب الأفكار حسب المتوسط مع تصنيف لوني، جدول الردود مع تفاصيل
   قابلة للتوسعة، حذف أي رد مع رسالة تأكيد، وتصدير النتائج إلى Excel أو CSV.
 
-## البيانات
+## البيانات والتخزين
 
-تُحفظ الردود في `data/responses.json` (غير مُتتبَّع في git). مصدر الأفكار والمعايير: `data/dataset.js`.
+طبقة تخزين مزدوجة (`data/store.js`):
+
+- **محلياً (بدون إعداد):** تُحفظ الردود في `data/responses.json`.
+- **في الإنتاج:** عند ضبط `SUPABASE_URL` و `SUPABASE_SERVICE_KEY` تُحفظ الردود في جدول Supabase (Postgres).
+
+مصدر الأفكار والمعايير: `data/dataset.js`.
+
+## النشر على Render مع Supabase
+
+**١) Supabase:** أنشئ مشروعاً، ثم في SQL Editor شغّل ملف `supabase_schema.sql` لإنشاء جدول `responses`.
+انسخ من Project Settings: `Project URL` و مفتاح `service_role`.
+
+**٢) Render:** New + → Blueprint (يقرأ `render.yaml`)، أو Web Service يدوياً:
+- Build: `npm install` — Start: `npm start`
+- في Environment أضف: `SUPABASE_URL` و `SUPABASE_SERVICE_KEY`.
+
+بعد النشر: الرابط الرئيسي للمقيّمين، و `/admin` للوحة التحكم. متغيّرات البيئة موضّحة في `.env.example`.
 
 > ملاحظة: لوحة `/admin` غير محمية بكلمة مرور حسب الإعداد المطلوب. لإضافة حماية لاحقاً يمكن وضع المنصة خلف
 > بوابة مصادقة أو إضافة تحقق على مسارات `/admin` و `/api/responses`.

@@ -1,0 +1,21 @@
+# مخطط نشر Render (Blueprint)
+# في Render: New + → Blueprint → اربط المستودع → سيقرأ هذا الملف تلقائياً.
+# ثم أضف قيم متغيّرات Supabase في إعدادات الخدمة (Environment).
+
+services:
+  - type: web
+    name: hadiyat-evaluation
+    runtime: node
+    plan: free
+    region: frankfurt        # الأقرب للمنطقة؛ يمكن تغييره
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: SUPABASE_URL
+        sync: false           # يُدخل يدوياً في لوحة Render (سرّي)
+      - key: SUPABASE_SERVICE_KEY
+        sync: false           # يُدخل يدوياً في لوحة Render (سرّي)
