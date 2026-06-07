@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>لوحة تحكم الأدمن · تقييم أفكار هدية عالم</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body class="admin">
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span><span class="orb orb-2"></span><span class="orb orb-3"></span>
+  </div>
+
+  <header class="admin-header glass">
+    <div class="ah-title">
+      <span class="brand-dot"></span>
+      <div>
+        <h1>لوحة التحكم</h1>
+        <p>نتائج تقييم أفكار استدامة جمعية هدية عالم — المرحلة الثانية</p>
+      </div>
+    </div>
+    <div class="ah-actions">
+      <button class="abtn" id="refresh-btn" type="button">↻ تحديث</button>
+      <a class="abtn" href="/api/export.csv" download>⬇︎ CSV</a>
+      <a class="abtn primary" href="/api/export.xlsx" download>⬇︎ Excel</a>
+    </div>
+  </header>
+
+  <main class="admin-main" id="admin-main">
+    <div class="loader"><div class="spinner"></div><span>جارٍ تحميل النتائج…</span></div>
+  </main>
+
+  <!-- نافذة تأكيد الحذف -->
+  <div class="modal-overlay" id="modal" hidden>
+    <div class="modal glass">
+      <div class="modal-icon">🗑️</div>
+      <h3>تأكيد حذف الرد</h3>
+      <p id="modal-text">هل تريد حذف رد المقيّم؟ لا يمكن التراجع عن هذا الإجراء.</p>
+      <div class="modal-actions">
+        <button class="abtn" id="modal-cancel" type="button">إلغاء</button>
+        <button class="abtn danger" id="modal-confirm" type="button">نعم، احذف</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

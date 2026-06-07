@@ -1,0 +1,5 @@
+node_modules/
+data/responses.json
+data/responses.json.tmp
+*.log
+.DS_Store

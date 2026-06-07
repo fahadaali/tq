@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>تقييم أفكار استدامة جمعية هدية عالم</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- خلفية متدرّجة حيّة -->
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+
+  <main class="stage" id="stage">
+    <!-- شريط التقدّم العلوي -->
+    <div class="topbar glass" id="topbar" hidden>
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          <span id="brand-phase">المرحلة الثانية · المعايير الوزنية</span>
+        </div>
+        <div class="progress-line"><span id="progress-fill"></span></div>
+        <div class="topbar-meta"><span id="step-counter">٠ / ٠</span></div>
+      </div>
+    </div>
+
+    <!-- منطقة البطاقات -->
+    <section class="cards" id="cards"></section>
+
+    <!-- أدوات التنقّل السفلية -->
+    <nav class="navbar glass" id="navbar" hidden>
+      <button class="nav-btn" id="prev-btn" type="button" aria-label="السابق">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>السابق</span>
+      </button>
+
+      <div class="dots" id="dots" role="tablist" aria-label="التنقّل بين الأفكار"></div>
+
+      <button class="nav-btn primary" id="next-btn" type="button" aria-label="التالي">
+        <span id="next-label">التالي</span>
+        <svg viewBox="0 0 24 24" width="22" height="22"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </nav>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "hadiyat-alam-evaluation",
+  "version": "1.0.0",
+  "description": "منصة تقييم أفكار ورشة عمل استدامة جمعية هدية عالم — المرحلة الثانية (المعايير الوزنية)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "xlsx": "^0.18.5"
+  }
+}
