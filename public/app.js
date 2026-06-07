@@ -169,11 +169,14 @@ function renderIdea(idea) {
   }).join('');
 
   return `
-    <button type="button" class="bookmark-btn ${bookmarked ? 'on' : ''}" id="bm" title="وضع إشارة مرجعية للرجوع لاحقاً" aria-pressed="${bookmarked}">
-      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z" fill="${bookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="idea-head">
+    <div class="idea-topbar">
       <span class="idea-cat">${esc(idea.category)}</span>
+      <button type="button" class="bookmark-btn ${bookmarked ? 'on' : ''}" id="bm" title="وضع إشارة مرجعية للرجوع لاحقاً" aria-pressed="${bookmarked}">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 4h12a1 1 0 0 1 1 1v15l-7-4-7 4V5a1 1 0 0 1 1-1z" fill="${bookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        <span class="bm-label">إشارة مرجعية</span>
+      </button>
+    </div>
+    <div class="idea-head">
       <h2 class="idea-title">${AR(idea.id)}. ${esc(idea.title)}</h2>
       <p class="idea-desc">${esc(idea.desc)}</p>
     </div>
@@ -214,7 +217,7 @@ function brandLockup() {
         <span class="brand-divider"></span>
         <img class="brand-logo" src="${b}" alt="مؤسسة باذل الأهلية" onerror="this.onerror=null;this.src='${bf}'" />
       </div>
-      <p class="brand-caption">مؤسسة باذل الأهلية<span class="sep">·</span>جمعية هدية عالم</p>
+      <p class="brand-caption">جمعية هدية عالم<span class="sep">·</span>مؤسسة باذل الأهلية</p>
     </div>`;
 }
 
