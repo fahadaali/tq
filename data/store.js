@@ -102,4 +102,62 @@ async function deleteResponse(id) {
   return true;
 }
 
-module.exports = { listResponses, addResponse, deleteResponse, mode };
+// تشخيص آمن للاتصال (لا يكشف المفاتيح)
+function keyKind(key) {
+  if (!key) return 'مفقود';
+  if (key.startsWith('sb_secret_')) return 'secret (يتجاوز RLS ✓)';
+  if (key.startsWith('sb_publishable_')) return 'publishable (anon — يمنعه RLS ✗)';
+  // مفاتيح JWT القديمة: فك الحمولة لقراءة الدور
+  const parts = key.split('.');
+  if (parts.length === 3) {
+    try {
+      const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf8'));
+      if (payload.role === 'service_role') return 'service_role (يتجاوز RLS ✓)';
+      if (payload.role === 'anon') return 'anon (يمنعه RLS ✗)';
+      return 'JWT (role=' + payload.role + ')';
+    } catch (e) { return 'JWT غير قابل للقراءة'; }
+  }
+  return 'غير معروف';
+}
+
+async function diagnose() {
+  const out = {
+    mode,
+    hasUrl: !!SUPABASE_URL,
+    urlHost: SUPABASE_URL ? SUPABASE_URL.replace(/^https?:\/\//, '').split('.')[0] + '.supabase.co' : null,
+    hasKey: !!SUPABASE_KEY,
+    keyKind: keyKind(SUPABASE_KEY),
+    table: TABLE,
+    ok: false,
+    count: null,
+    error: null,
+  };
+  if (mode !== 'supabase') {
+    out.ok = true; out.note = 'وضع الملف المحلي — متغيّرات Supabase غير مضبوطة على الخادم.';
+    return out;
+  }
+  try {
+    const { count, error } = await supabase.from(TABLE).select('*', { count: 'exact', head: true });
+    if (error) { out.error = error.message; out.hint = errorHint(error.message); }
+    else { out.ok = true; out.count = count; }
+  } catch (e) {
+    out.error = String(e && e.message || e);
+    out.hint = errorHint(out.error);
+  }
+  return out;
+}
+
+function errorHint(msg) {
+  const m = (msg || '').toLowerCase();
+  if (m.includes('does not exist') || m.includes('not find the table') || m.includes('schema cache'))
+    return 'الجدول «' + TABLE + '» غير موجود — شغّل ملف supabase_schema.sql في SQL Editor.';
+  if (m.includes('row-level security') || m.includes('rls') || m.includes('permission') || m.includes('not authorized'))
+    return 'سياسة RLS تمنع الوصول — تأكد أنك تستخدم مفتاح service_role / secret وليس anon / publishable.';
+  if (m.includes('invalid api key') || m.includes('jwt') || m.includes('apikey'))
+    return 'المفتاح غير صحيح — انسخ مفتاح service_role من Project Settings → API.';
+  if (m.includes('fetch failed') || m.includes('enotfound') || m.includes('getaddrinfo'))
+    return 'تعذّر الوصول للرابط — تحقق من صحة SUPABASE_URL.';
+  return 'راجع رسالة الخطأ أعلاه.';
+}
+
+module.exports = { listResponses, addResponse, deleteResponse, diagnose, mode };

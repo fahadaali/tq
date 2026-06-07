@@ -38,6 +38,15 @@ app.get('/api/config', (req, res) => {
   res.json({ project: PROJECT, roles: ROLES, criteria: CRITERIA, ideas: IDEAS });
 });
 
+// تشخيص الاتصال بقاعدة البيانات (آمن — لا يكشف المفاتيح)
+app.get('/api/diag', async (req, res) => {
+  try {
+    res.json(await store.diagnose());
+  } catch (e) {
+    res.status(500).json({ error: String(e && e.message || e) });
+  }
+});
+
 // استلام رد جديد
 app.post('/api/submit', async (req, res) => {
   const body = req.body || {};
