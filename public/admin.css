@@ -75,6 +75,8 @@ table.resp tbody tr:hover { background: rgba(120,120,128,.06); }
 
 /* نافذة التأكيد */
 .modal-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(20,25,45,.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: grid; place-items: center; padding: 20px; animation: ovf .2s ease; }
+/* احترام خاصية hidden (وإلا تبقى النافذة ظاهرة لأن display:grid يتغلّب عليها) */
+.modal-overlay[hidden] { display: none; }
 @keyframes ovf { from { opacity: 0; } }
 .modal { max-width: 380px; width: 100%; border-radius: 24px; padding: 28px 26px; text-align: center; animation: pop .35s cubic-bezier(.22,1.4,.36,1) both; }
 .modal-icon { font-size: 40px; margin-bottom: 10px; }
